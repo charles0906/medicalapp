@@ -34,7 +34,7 @@
     <%= f.label :status %><br />
     <%= f.text_field :status %>
   </div>
-  <%= f.hidden_field :typeper, :value => "patient" %>
+   <%= f.hidden_field :typeper, :value => current_user.role %>
   <div class="actions">
     <%= f.submit %>
   </div>

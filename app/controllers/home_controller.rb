@@ -4,7 +4,7 @@ class HomeController < ApplicationController
            @person = Person.where(:user_id => current_user.id)
            if @person.empty?
              @person = Person.new
-             render :action=>'newpatient'
+             render :action=>'newperson'
            else
          
            end

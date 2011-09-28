@@ -4,15 +4,13 @@ class PeopleController < ApplicationController
     #@people = Person.all
     if params[:typeper]
      @people=Person.where(:typeper=>params[:typeper])
-  
-  
-    end
+   end
+   @typepper=params[:typeper]
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @people }
     end
   end
-
   def show
     @person = Person.find(params[:id])
 
@@ -24,7 +22,6 @@ class PeopleController < ApplicationController
 
   def new
     @person = Person.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @person }
@@ -37,10 +34,8 @@ class PeopleController < ApplicationController
 
   def create
     @person = Person.new(params[:person])
-
     respond_to do |format|
       if @person.save
-
         format.html { redirect_to(@person, :notice => 'Person was successfully created.') }
         format.xml  { render :xml => @person, :status => :created, :location => @person }
       else
@@ -66,11 +61,10 @@ class PeopleController < ApplicationController
 
   def destroy
     @person = Person.find(params[:id])
+    params[:typeper]= @person.typeper
     @person.destroy
+    redirect_to(typepeople_path(params[:typeper]))
 
-    respond_to do |format|
-      format.html { redirect_to(people_url) }
-      format.xml  { head :ok }
-    end
   end
+
 end

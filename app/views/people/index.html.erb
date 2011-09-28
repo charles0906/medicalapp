@@ -1,5 +1,6 @@
-<h1>Listing people</h1>
 
+<% if @people.size>0 %>
+<h3>Listing <%= pluralize(@people.count, @typepper)%> </h3>
 <table>
   <tr>
     <th>User</th>
@@ -16,7 +17,6 @@
     <th></th>
     <th></th>
   </tr>
-
 <% @people.each do |person| %>
   <tr>
     <td><%= person.user_id %></td>
@@ -32,10 +32,14 @@
     <td><%= link_to 'Show', person %></td>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
     <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
+	<% if @typepper.eql? "doctor" %>
+	<td><%= link_to 'schedule' , new_appointment_with_doctor_path(person.id) %></td>
+	<% end %>
   </tr>
 <% end %>
 </table>
-
+<% else %>
+<h3><%=pluralize(@people.count,@typepper)%> found</h3>
+<% end %>
 <br />
 
-<%= link_to 'New Person', new_person_path %>

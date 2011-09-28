@@ -10,9 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927183056) do
+ActiveRecord::Schema.define(:version => 20110928201550) do
+
+  create_table "appointments", :force => true do |t|
+    t.integer  "doctor_id"
+    t.integer  "patient_id"
+    t.date     "dateapp"
+    t.time     "timeapp"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "people", :force => true do |t|
+    t.string   "type"
     t.integer  "user_id"
     t.string   "name"
     t.string   "lastname"
@@ -24,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20110927183056) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "typeper"
   end
 
   create_table "users", :force => true do |t|
