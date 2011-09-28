@@ -11,6 +11,10 @@
   <%= render 'layouts/header' %>
 <h1><%= link_to "MedicalAPP", home_index_path,:id=>"logo"%></h1>
 <div class="subcontainer">
+	<% if personExist?  %>
+	       <%= render 'layouts/menu' %>
+	<br>
+	  <% end %>
 <%= yield %>
 </div>
 </div><!--container-->

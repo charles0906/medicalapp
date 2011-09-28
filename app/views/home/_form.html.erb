@@ -1,0 +1,41 @@
+<%= form_for(@person) do |f| %>
+  <div class="field">
+ <%= f.hidden_field :user_id, :value => current_user.id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :lastname %><br />
+    <%= f.text_field :lastname %>
+  </div>
+  <div class="field">
+    <%= f.label :sex %>
+     <%= f.collection_select :sex, Person::SEXS, :to_s, :titleize %>
+  </div>
+  <div class="field">
+    <%= f.label :birthday %><br />
+    <%= f.text_field :birthday %>
+  </div>
+  <div class="field">
+    <%= f.label :cellnumber %><br />
+    <%= f.text_field :cellnumber %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <%= f.hidden_field :typeper, :value => "patient" %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
