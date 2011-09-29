@@ -1,4 +1,8 @@
-
+<% if flash[:notice] %>
+  <div id="error_explanation">
+    <%=flash[:notice]%>
+  </div>
+<% end %>
 <% if @people.size>0 %>
 <h3>Listing <%= pluralize(@people.count, @typepper)%> </h3>
 <table>
@@ -19,7 +23,7 @@
   </tr>
 <% @people.each do |person| %>
   <tr>
-    <td><%= person.user_id %></td>
+    <td><%= person.user.email %></td>
     <td><%= person.name %></td>
     <td><%= person.lastname %></td>
     <td><%= person.sex %></td>

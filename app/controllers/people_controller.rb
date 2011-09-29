@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-
+  before_filter :authenticate_user!
   def index
     #@people = Person.all
     if params[:typeper]
@@ -30,9 +30,12 @@ class PeopleController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
+    mydate= @person.birthday.split("-")
+    @person.birthday=Date.strptime("{#{mydate[0]},#{mydate[1]},#{mydate[2]}}","{%Y,%m,%d}")
   end
 
   def create
+    createDate
     @person = Person.new(params[:person])
     respond_to do |format|
       if @person.save
@@ -46,10 +49,12 @@ class PeopleController < ApplicationController
   end
 
   def update
+    createDate
     @person = Person.find(params[:id])
-
     respond_to do |format|
       if @person.update_attributes(params[:person])
+         @user=User.find(@person.user_id)
+         UserMailer.registration_confirmation(@user).deliver  
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -64,7 +69,23 @@ class PeopleController < ApplicationController
     params[:typeper]= @person.typeper
     @person.destroy
     redirect_to(typepeople_path(params[:typeper]))
-
+  end
+  
+  def createDate
+    if params[:person]['birthday(2i)'].length < 2
+      mount="0" + params[:person]['birthday(2i)']
+    else
+      mount=params[:person]['birthday(2i)']
+    end
+    if params[:person]['birthday(3i)'].length < 2
+      day="0" + params[:person]['birthday(3i)']
+    else
+      day=params[:person]['birthday(3i)']
+    end
+     params[:person][:birthday]=params[:person]['birthday(1i)']+"-"+mount+"-"+ day
+     params[:person].delete('birthday(1i)')
+     params[:person].delete('birthday(2i)')
+     params[:person].delete('birthday(3i)')
   end
 
 end

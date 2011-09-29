@@ -2,21 +2,16 @@
 
 <p>
   <b>Doctor:</b>
-  <%= @appointment.doctor_id %>
+  <%= @doctor.name + " " + @doctor.lastname %>
 </p>
 
 <p>
-  <b>Patient:</b>
-  <%= @appointment.patient_id %>
-</p>
-
-<p>
-  <b>Dateapp:</b>
+  <b>Date:</b>
   <%= @appointment.dateapp %>
 </p>
 
 <p>
-  <b>Timeapp:</b>
+  <b>Hour:</b>
   <%= @appointment.timeapp %>
 </p>
 
@@ -24,7 +19,5 @@
   <b>Status:</b>
   <%= @appointment.status %>
 </p>
-
-
-<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
+<%#link_to 'Edit', edit_appointment_path(@appointment) %> 
 <%= link_to 'Back', appointments_path %>

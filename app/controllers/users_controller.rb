@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  #load_and_authorize_resource
+   before_filter :authenticate_user!
 
   def index
    # @users = User.where("id NOT IN (?)", current_user.id) # don't display the current user in the users list; go to account management to edit current user details
