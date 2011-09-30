@@ -20,3 +20,4 @@ class CreatePeople < ActiveRecord::Migration
     drop_table :people
   end
 end
+
