@@ -1,0 +1,32 @@
+<%if @walls.size>0 %>
+<h3>Listing <%= pluralize(@walls.count,"wall")%> </h3>
+<table>
+  <tr>
+    <th>Doctor</th>
+    <th>Date</th>
+    <th>Hour</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @walls.each do |wall| %>
+  <tr>
+    <td><%= "#{wall.person.name} #{wall.person.lastname}"%></td>
+    <td><%= wall.dateini %></td>
+    <td><%= wall.hourini %></td>
+    <td><%= link_to 'Show', wall %></td>
+    <td><%= link_to 'Edit', edit_wall_path(wall) %></td>
+    <td><%= link_to 'Destroy', wall, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+
+
+<%else%>
+<h3>Walls not found </h3>
+<%end%>
+<br />
+
+<%= link_to 'New Wall', new_wall_path %>

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Doctor:</b>
+  <%= @recurrence.person.name %> <%= @recurrence.person.lastname %>
+</p>
+
+<p>
+  <b>Day:</b>
+  <%= @recurrence.day %>
+</p>
+
+<p>
+  <b>Hourrecu:</b>
+  <%= @recurrence.hourrecu %>
+</p>
+
+
+<%= link_to 'Edit', edit_recurrence_path(@recurrence) %> |
+<%= link_to 'Back', recurrences_path %>

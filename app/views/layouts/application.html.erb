@@ -4,7 +4,20 @@
   <title>Medicalapp</title>
   <%= render 'layouts/stylesheets' %>
   <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag "wufoo" %>
   <%= csrf_meta_tag %>
+<script>
+$(function(){
+   $("tr").each(function(i){
+	
+      if(i%2==0){
+         $(this).css("background-color", "white");
+      }else if(i==1){
+         $(this).css("text-align", "center");
+      }
+   });
+});
+</script>
 </head>
 <body id="public">
 <div id="container">

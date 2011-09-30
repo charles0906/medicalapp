@@ -53,8 +53,8 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     respond_to do |format|
       if @person.update_attributes(params[:person])
-         @user=User.find(@person.user_id)
-         UserMailer.registration_confirmation(@user).deliver  
+        # @user=User.find(@person.user_id)
+         #UserMailer.registration_confirmation(@user).deliver  
         format.html { redirect_to(@person, :notice => 'Person was successfully updated.') }
         format.xml  { head :ok }
       else

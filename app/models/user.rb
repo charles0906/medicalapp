@@ -8,5 +8,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :role
   ROLES = %w[admin doctor patient]
-
+  
+  def role_symbols
+    [role.to_sym]
+  end
 end

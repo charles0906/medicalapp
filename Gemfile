@@ -33,3 +33,4 @@ end
 gem 'bcrypt-ruby' ,'2.1.3'
 gem 'warden', '1.0.3'
 gem 'devise' ,'1.1.5'
+gem "cancan", "~> 1.6.6"

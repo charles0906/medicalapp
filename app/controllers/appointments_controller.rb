@@ -3,14 +3,9 @@ class AppointmentsController < ApplicationController
   def index
     @User= current_user
     if current_user.role.eql? "patient"
-      p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+@User.person.id.to_s
       @appointments=Appointment.where(:patient_id => @User.person.id ) 
-            p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+@User.person.id.to_s
     elsif current_user.role.eql? "doctor"
-      p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ @User.person.id.to_s
       @appointments=Appointment.where(:doctor_id => @User.person.id )
-      p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+ @appointments.size.to_s
-        p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+@User.person.id.to_s
     else
       @appointments = Appointment.all
     end
@@ -50,8 +45,15 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(params[:appointment])
     appointment_verify = Appointment.where(:doctor_id=>@appointment.doctor_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
-    if appointment_verify.size > 0
-      redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' has already an appointment this date and hour.')
+    appointment_verify_2 = Appointment.where(:patient_id=>@appointment.patient_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
+    walls = Wall.where(:doctor_id=>@appointment.doctor_id,:dateini=>@appointment.dateapp,:hourini=>@appointment.timeapp)
+    if walls.size>0
+        p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",walls.size
+       redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' is not avalible for this date.')   
+    elsif appointment_verify.size > 0
+      redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' has already an appointment with the date and hour chosen.')
+    elsif appointment_verify_2.size > 0
+     redirect_to(typepeople_path("doctor"), :notice => 'You have already an appointment with the date and hour chosen.')
     else
         respond_to do |format| 
          if @appointment.save!
@@ -91,9 +93,11 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find(params[:appointment_id])
       @appointment.status="Canceled"
        respond_to do |format|
-          if @appointment.update_attributes(@appointment)
-            @user=User.find(current_user.id)
-            UserMailer.cancellation_of_appointment(@user, @appointment).deliver
+          if  @appointment.update_attributes(@appointment)
+            if current_user.role.eql? "doctor"
+              @user=User.find(@appointment.patient.user.id)
+              UserMailer.cancellation_of_appointment(@user, @appointment).deliver
+            end
             format.html { redirect_to(@appointment, :notice => 'Appointment was canceled.') }
             format.xml  { head :ok }
           else

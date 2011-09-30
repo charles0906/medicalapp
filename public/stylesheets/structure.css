@@ -87,9 +87,15 @@ div.subcontainer{
 }
 #horizontalmenu {  
 padding: 0;  
-width:350px;
+width:700px;
 margin: 0 auto;
+font-size: 16px; 
 }
 #horizontalmenu li {  
 display: inline;  
+padding-left: 20px;
+}
+img {
+text-align: center; 	
+	
 }

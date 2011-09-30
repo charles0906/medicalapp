@@ -2,7 +2,7 @@
 
 <p>
   <b>User:</b>
-  <%= @person.user_id %>
+  <%= @person.user.email%>
 </p>
 
 <p>
@@ -50,6 +50,7 @@
   <%= @person.status %>
 </p>
 
-
-<%= link_to 'Edit', edit_person_path(@person) %> |
+<% if current_user.role.eql? "admin" %>
+    <%= link_to 'Edit', edit_person_path(@person) %> |
+	<% end %>
 <%= link_to 'Back', typepeople_path(@person.typeper)  %>

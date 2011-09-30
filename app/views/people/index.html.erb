@@ -7,7 +7,6 @@
 <h3>Listing <%= pluralize(@people.count, @typepper)%> </h3>
 <table>
   <tr>
-    <th>User</th>
     <th>Name</th>
     <th>Lastname</th>
     <th>Sex</th>
@@ -23,7 +22,6 @@
   </tr>
 <% @people.each do |person| %>
   <tr>
-    <td><%= person.user.email %></td>
     <td><%= person.name %></td>
     <td><%= person.lastname %></td>
     <td><%= person.sex %></td>
@@ -34,9 +32,14 @@
     <td><%= person.typeper %></td>
     <td><%= person.status %></td>
     <td><%= link_to 'Show', person %></td>
+    <% if current_user.role.eql? "admin" %>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
-    <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
-	<% if @typepper.eql? "doctor" %>
+   <%end%>
+     <% if current_user.role.eql? "admin" %>
+   <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
+   <%end%>
+
+	<% if current_user.role.eql? "patient" %>
 	<td><%= link_to 'schedule' , new_appointment_with_doctor_path(person.id) %></td>
 	<% end %>
   </tr>

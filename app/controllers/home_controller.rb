@@ -6,8 +6,11 @@ class HomeController < ApplicationController
              @person = Person.new
              render :action=>'newperson'
            else
-         
-           end
+             redirect_to appointments_path
+            end
      end
+  end
+  
+  def help
   end
 end

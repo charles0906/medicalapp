@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Doctor:</b>
+  <%= @wall.doctor_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @wall.dateini %>
+</p>
+
+<p>
+  <b>Hour:</b>
+  <%= @wall.hourini %>
+</p>
+
+<p>
+<%= link_to 'Edit', edit_wall_path(@wall) %> |
+<%= link_to 'Back', walls_path %>

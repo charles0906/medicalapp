@@ -1,7 +1,7 @@
 <header>
   <nav>
    	<% if user_signed_in? %>
-	 	  <div style="float:right">  <%= link_to "Sign out", destroy_user_session_path %> </div>
+	   <div style="float:right">Signed in as <%= current_user.email %> | <%= link_to "Sign out", destroy_user_session_path %> </div>
 	  <% else %>
 	  <div style="float:right"><%= link_to "Sign in", user_session_url %> or <%= link_to "Sign Up", new_user_registration_path %></div>
 	  <% end %>

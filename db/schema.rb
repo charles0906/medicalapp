@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110929215133) do
+ActiveRecord::Schema.define(:version => 20110930191726) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(:version => 20110929215133) do
     t.string   "typeper"
   end
 
+  create_table "recurrences", :force => true do |t|
+    t.integer  "doctor_id"
+    t.string   "day"
+    t.time     "hourrecu"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
     t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
@@ -56,5 +64,16 @@ ActiveRecord::Schema.define(:version => 20110929215133) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "walls", :force => true do |t|
+    t.integer  "doctor_id"
+    t.date     "dateini"
+    t.time     "hourini"
+    t.date     "datefin"
+    t.time     "hourfin"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
