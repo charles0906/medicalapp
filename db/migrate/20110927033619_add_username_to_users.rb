@@ -9,7 +9,8 @@ class AddUsernameToUsers < ActiveRecord::Migration
  def self.down
 
   remove_column :users, :role
-
+ 
+ 
  end
 
 end
