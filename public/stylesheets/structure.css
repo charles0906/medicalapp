@@ -95,7 +95,7 @@ font-size: 16px;
 display: inline;  
 padding-left: 20px;
 }
-img {
-text-align: center; 	
+td , th{
+padding-left: 10px; 	
 	
 }

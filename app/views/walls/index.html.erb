@@ -15,9 +15,11 @@
     <td><%= "#{wall.person.name} #{wall.person.lastname}"%></td>
     <td><%= wall.dateini %></td>
     <td><%= wall.hourini %></td>
-    <td><%= link_to 'Show', wall %></td>
-    <td><%= link_to 'Edit', edit_wall_path(wall) %></td>
-    <td><%= link_to 'Destroy', wall, :confirm => 'Are you sure?', :method => :delete %></td>
+   <td><%=  link_to image_tag("Show.png", :alt => "Show", :title=>"Show"), wall %> </td>
+   <td><%=  link_to image_tag("Edit.png", :alt => "Edit", :title=>"Edit"),  edit_wall_path(wall) %> </td>
+<td><%=  link_to image_tag("Destroy.png", :alt => "Destroy", :title=>"Destroy"),  wall, :confirm => 'Are you sure?', :method => :delete %> </td>
+
+
   </tr>
 <% end %>
 </table>

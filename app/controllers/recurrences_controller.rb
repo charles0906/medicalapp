@@ -35,6 +35,7 @@ class RecurrencesController < ApplicationController
 
   def create
     @recurrence = Recurrence.new(params[:recurrence])
+    #@recurrence.hourrecu=params[:hourrecu].to_time.hour
     @recurrence.doctor_id=current_user.person.id
     respond_to do |format|
       if @recurrence.save

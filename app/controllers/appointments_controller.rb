@@ -43,13 +43,14 @@ class AppointmentsController < ApplicationController
   end
 
   def create
+    daysoff=["Sunday","Monday" ,"Tuesday", "Wednesday", "Thursday" ,"Friday" ,"Saturday"]
     @appointment = Appointment.new(params[:appointment])
     appointment_verify = Appointment.where(:doctor_id=>@appointment.doctor_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
     appointment_verify_2 = Appointment.where(:patient_id=>@appointment.patient_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
-    walls = Wall.where(:doctor_id=>@appointment.doctor_id,:dateini=>@appointment.dateapp,:hourini=>@appointment.timeapp)
-    
+    walls = Wall.where(:doctor_id=>@appointment.doctor_id,:dateini=>@appointment.dateapp,:hourini=>@appointment.timeapp)   
+    @myappointment=@appointment
+    recurrences = Recurrence.where(:doctor_id=>@myappointment.doctor_id,:hourrecu=>@myappointment.timeapp, :day=>daysoff[@myappointment.dateapp.to_time.wday])          
     if walls.size>0
-        p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",walls.size
        redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' is not avalible for this date.')   
     elsif appointment_verify.size > 0
       redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' has already an appointment with the date and hour chosen.')
@@ -57,6 +58,9 @@ class AppointmentsController < ApplicationController
      redirect_to(typepeople_path("doctor"), :notice => 'You have already an appointment with the date and hour chosen.')
     elsif  @appointment.dateapp < Time.now.to_date+1
       redirect_to(typepeople_path("doctor"), :notice => 'the date can not be less than the date '+(Time.now.to_date+1).to_s)
+    elsif recurrences.size>0
+      p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",recurrences.size
+      redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' is not avalible for this date. Type: recurrent')
     else
         respond_to do |format| 
          if @appointment.save!
