@@ -11,6 +11,11 @@ class HomeController < ApplicationController
      end
   end
   
+  def newperson
+    @error=params[:error]
+    @person=Person.new
+  end
+  
   def help
   end
 end

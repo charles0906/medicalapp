@@ -20,6 +20,7 @@ Medicalapp::Application.routes.draw do
   match 'new_appointment_with_doctor/:doctor_id'=>'Appointments#new', :as => 'new_appointment_with_doctor'
   match 'cancel_appointment/:appointment_id'=>'Appointments#cancel', :as => 'cancel_appointment'
   match '/help',    :to => 'home#help'
+  match 'newperson/:error'=>'Home#newperson', :as => 'newperson' 
 
  
 end

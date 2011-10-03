@@ -28,8 +28,7 @@ class WallsController < ApplicationController
   # GET /walls/new.xml
   def new
     @wall = Wall.new
-
-    respond_to do |format|
+        respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @wall }
     end
@@ -45,13 +44,22 @@ class WallsController < ApplicationController
   def create
     @wall = Wall.new(params[:wall])
     @wall.doctor_id=current_user.person.id
-    respond_to do |format|
-      if @wall.save
-        format.html { redirect_to(@wall, :notice => 'Wall was successfully created.') }
-        format.xml  { render :xml => @wall, :status => :created, :location => @wall }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @wall.errors, :status => :unprocessable_entity }
+    @appointments=Appointment.where(:doctor_id=>@wall.doctor_id, :dateapp=>@wall.dateini,:timeapp=>@wall.hourini, :status=>'Scheduled')
+    if @appointments.size>0
+      @error="Wall not was created. Your already have scheduled appointments for this date and hour"
+      render :action => "new" 
+    elsif  @wall.dateini < Time.now.to_date+1
+     @error="the date can not be less than the date #{(Time.now.to_date+1).to_s}"
+     render :action => "new"
+    else
+      respond_to do |format|
+        if @wall.save
+          format.html { redirect_to(@wall, :notice => 'Wall was successfully created.') }
+          format.xml  { render :xml => @wall, :status => :created, :location => @wall }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @wall.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -61,15 +69,23 @@ class WallsController < ApplicationController
   def update
     @wall = Wall.find(params[:id])
     @wall.doctor_id=current_user.person.id
-    respond_to do |format|
-      if @wall.update_attributes(params[:wall])
-        format.html { redirect_to(@wall, :notice => 'Wall was successfully updated.') }
-        format.xml  { head :ok }
+      if @appointments.size>0
+        @error="Wall not was updated. Your already have scheduled appointments for this date and hour"
+        render :action => "new" 
+      elsif  @wall.dateini < Time.now.to_date+1
+       @error="the date can not be less than the date #{(Time.now.to_date+1).to_s}"
+       render :action => "new"
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @wall.errors, :status => :unprocessable_entity }
+        respond_to do |format|
+          if @wall.update_attributes(params[:wall])
+            format.html { redirect_to(@wall, :notice => 'Wall was successfully updated.') }
+            format.xml  { head :ok }
+          else
+            format.html { render :action => "edit" }
+            format.xml  { render :xml => @wall.errors, :status => :unprocessable_entity }
+          end
+        end
       end
-    end
   end
 
   # DELETE /walls/1

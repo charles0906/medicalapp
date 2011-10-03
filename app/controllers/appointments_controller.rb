@@ -47,6 +47,7 @@ class AppointmentsController < ApplicationController
     appointment_verify = Appointment.where(:doctor_id=>@appointment.doctor_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
     appointment_verify_2 = Appointment.where(:patient_id=>@appointment.patient_id, :dateapp=>@appointment.dateapp,:timeapp=>@appointment.timeapp, :status=>"Scheduled")
     walls = Wall.where(:doctor_id=>@appointment.doctor_id,:dateini=>@appointment.dateapp,:hourini=>@appointment.timeapp)
+    
     if walls.size>0
         p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",walls.size
        redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' is not avalible for this date.')   
@@ -54,6 +55,8 @@ class AppointmentsController < ApplicationController
       redirect_to(typepeople_path("doctor"), :notice => 'Dr. '+@appointment.doctor.name+'  '+@appointment.doctor.lastname+' has already an appointment with the date and hour chosen.')
     elsif appointment_verify_2.size > 0
      redirect_to(typepeople_path("doctor"), :notice => 'You have already an appointment with the date and hour chosen.')
+    elsif  @appointment.dateapp < Time.now.to_date+1
+      redirect_to(typepeople_path("doctor"), :notice => 'the date can not be less than the date '+(Time.now.to_date+1).to_s)
     else
         respond_to do |format| 
          if @appointment.save!

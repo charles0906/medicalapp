@@ -1,6 +1,11 @@
 <%= form_for(@person) do |f| %>
   <div class="field">
- <%= f.hidden_field :user_id, :value => current_user.id %>
+	<%unless  @error.nil?%>
+    <div id="error_explanation">
+      <h2><%= @error %></h2>
+      <% end %>
+    </div>
+<%= f.hidden_field :user_id, :value => current_user.id%>    
   </div>
   <div class="field">
     <%= f.label :name %><br />
@@ -16,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :birthday %><br />
-    <%= f.date_select  :birthday %> 
+    <%= f.date_select  :birthday ,:start_year=>Time.now.year-70,:end_year=>Time.now.year-18%> 
 	
   </div>
   <div class="field">

@@ -42,8 +42,10 @@ class PeopleController < ApplicationController
         format.html { redirect_to(@person, :notice => 'Person was successfully created.') }
         format.xml  { render :xml => @person, :status => :created, :location => @person }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
+          format.html { redirect_to(newperson_path(@person.errors), :notice => 'Person not was created.') }
+          format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
   end

@@ -12,4 +12,7 @@ class User < ActiveRecord::Base
   def role_symbols
     [role.to_sym]
   end
+  
+  
+  
 end

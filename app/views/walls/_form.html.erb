@@ -10,14 +10,18 @@
       </ul>
     </div>
   <% end %>
-
+  <% unless @error.nil? %>
+    <div id="error_explanation">
+      <%=@error%>
+    </div>
+  <% end %>
   <div class="field">
     <%= f.label :date %><br />
-    <%= f.date_select :dateini %>
+    <%= f.date_select :dateini, :start_year=>Time.now.year,:end_year=>Time.now.year%>
   </div>
   <div class="field">
     <%= f.label :hour %><br />
-    <%= f.time_select :hourini ,:minute_step => 30%>
+    <%= f.time_select :hourini ,:minute_step => 30 %>
   </div>
   <div class="actions">
     <%= f.submit %>

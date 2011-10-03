@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+    validates_presence_of :name, :lastname,:user_id, :sex,:birthday
     belongs_to :user
     has_many :appointments
     has_many :doctors, :through => :appointments
